@@ -1,0 +1,27 @@
+version: '3'
+services:
+  postgres-server:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    volumes:
+      - /home/szmiki/workspace/docker-volumes/pgdata:/var/lib/postgresql/data
+#    ports:
+#      - "5432:5432"
+    networks:
+      - proxy
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8888:8080"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    driver: bridge
