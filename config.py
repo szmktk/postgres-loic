@@ -1,5 +1,6 @@
 import os
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
+from typing import Dict
 
 
 @dataclass(frozen=True)
@@ -9,8 +10,6 @@ class Config:
     password: str
     host: str
     port: str
-    log_format: str
-    log_level: str
 
     @classmethod
     def load_values(cls):
@@ -20,13 +19,10 @@ class Config:
             password=os.environ['PGPASSWORD'],
             host=os.environ['PGHOST'],
             port=os.environ['PGPORT'],
-            log_format=os.environ.get(
-                'LOG_FORMAT', '[%(asctime)s.%(msecs)03d] %(levelname)s - %(message)s'
-            ),
-            log_level=os.environ.get('LOG_LEVEL', 'INFO'),
         )
 
-# TODO add a function to get a dictionary here!
+    def dict(self) -> Dict:
+        return asdict(self)
 
 
 config = Config.load_values()

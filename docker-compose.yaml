@@ -4,13 +4,14 @@ services:
     image: postgres
     restart: always
     environment:
+      # TODO provide config to control max_connections param
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: mydatabase
     volumes:
       - /home/szmiki/workspace/docker-volumes/pgdata:/var/lib/postgresql/data
-#    ports:
-#      - "5432:5432"
+    ports:
+      - "5432:5432"
     networks:
       - proxy
 
